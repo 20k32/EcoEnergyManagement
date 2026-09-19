@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EcoEnergyManagement.Core.Data;
 using EcoEnergyManagement.Core.Dispatching;
 using EcoEnergyManagement.Core.Logging;
 using EcoEnergyManagement.PlatformHelpers.Windowing;
@@ -24,8 +25,10 @@ namespace EcoEnergyManagement.UI
             Logger.Information("Application initialized");
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
+            await DatabaseInitializer.InitializeAsync();
+
             var windowHelper = Ioc.Default.GetRequiredService<IWindowHelper>();
 
             windowHelper.MainWindow = new MainWindow();
