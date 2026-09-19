@@ -14,6 +14,14 @@
     </Window.SystemBackdrop>
 
     <Grid>
-
+        <NavigationView x:Name="NavView" IsBackButtonVisible="Collapsed" ItemInvoked="NavView_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Icon="Home" Tag="home"/>
+                <NavigationViewItem Content="Inventory" Icon="List" Tag="inventory"/>
+                <NavigationViewItem Content="Data Entry" Icon="Edit" Tag="dataentry"/>
+                <NavigationViewItem Content="Reports" Icon="Document" Tag="reports"/>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView>
     </Grid>
 </Window>
