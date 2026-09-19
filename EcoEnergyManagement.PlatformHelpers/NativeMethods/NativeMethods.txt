@@ -1,0 +1,10 @@
+﻿MONITORENUMPROC
+MONITORINFOEX
+MONITORINFOEXW
+MONITORINFOF_*
+RECT
+GetDesktopWindow
+GetShellWindow
+EnumDisplayMonitors
+MonitorFromWindow
+GetMonitorInfo

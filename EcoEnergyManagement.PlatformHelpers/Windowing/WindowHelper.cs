@@ -1,0 +1,83 @@
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EcoEnergyManagement.Core.Constants;
+using EcoEnergyManagement.PlatformHelpers.Miscellaneous;
+using EcoEnergyManagement.PlatformHelpers.Screens;
+using Microsoft.UI.Xaml;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Graphics;
+
+namespace EcoEnergyManagement.PlatformHelpers.Windowing
+{
+    sealed class WindowHelper : IWindowHelper
+    {
+        readonly TaskCompletionSource _windowInitializationSource;
+
+        Window _mainWindow;
+        public Window MainWindow
+        {
+            get => _mainWindow;
+            set
+            {
+                if (_mainWindow is not null)
+                {
+                    throw new ArgumentOutOfRangeException(string.Format(Constants.ARGUMENT_NOT_NULL_EXCEPTION_FORMAT, _mainWindow));
+                }
+                else if (value is null)
+                {
+                    throw new ArgumentNullException(string.Format(Constants.ARGUMENT_NULL_EXCEPTION_FORMAT, _mainWindow));
+                }
+                else
+                {
+                    _mainWindow = value;
+                    _mainWindow.Activated += OnMainWindowActivated;
+                }
+            }
+        }
+
+        bool CanChangeMainWindow => _mainWindow is not null;
+        public Task WindowInitializationTask => _windowInitializationSource.Task;
+
+        void OnMainWindowActivated(object sender, WindowActivatedEventArgs args)
+        {
+            if (sender is Window window)
+            {
+                window.Activated -= OnMainWindowActivated;
+            }
+
+            _windowInitializationSource.TrySetResult();
+        }
+
+
+        public WindowHelper()
+        {
+            _windowInitializationSource = new TaskCompletionSource();
+        }
+
+        public void ActivateApplicationWindow()
+        {
+            MainWindow?.Activate();
+        }
+
+        public void CenterMainWindow()
+        {
+            if (CanChangeMainWindow)
+            {
+                var primaryScreenLocation = Ioc.Default.GetService<IScreenListener>()
+                    .Locations.First(location => location.IsPrimary);
+
+                var centerX = (int)(primaryScreenLocation.ScaledSize.Width - ApplicationWindowConstants.DESIGN_WIDTH) / 2;
+                var centerY = (int)(primaryScreenLocation.ScaledSize.Height - ApplicationWindowConstants.DESIGN_HEIGHT) / 2;
+
+                var desiredWindowBounds = new RectInt32(
+                    _X: centerX,
+                    _Y: centerY,
+                    _Width: ApplicationWindowConstants.DESIGN_WIDTH,
+                    _Height: ApplicationWindowConstants.DESIGN_HEIGHT);
+
+                MainWindow.AppWindow.MoveAndResize(desiredWindowBounds);
+            }
+        }
+    }
+}

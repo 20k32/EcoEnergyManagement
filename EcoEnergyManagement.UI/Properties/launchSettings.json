@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EcoEnergyManagement.UI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EcoEnergyManagement.UI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

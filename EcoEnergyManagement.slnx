@@ -1,0 +1,25 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="EcoEnergyManagement.Core/EcoEnergyManagement.Core.csproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="EcoEnergyManagement.Models/EcoEnergyManagement.Models.csproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="EcoEnergyManagement.PlatformHelpers/EcoEnergyManagement.PlatformHelpers.csproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="EcoEnergyManagement.UI/EcoEnergyManagement.UI.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
+  <Project Path="EcoEnergyManagement.ViewModels/EcoEnergyManagement.ViewModels.csproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+</Solution>
